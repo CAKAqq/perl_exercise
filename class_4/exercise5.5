@@ -1,0 +1,18 @@
+#!/usr/bin/perl -w
+print "Please enter the proteinfile: ";
+$proteinname = <STDIN>;
+chomp $proteinname;
+open PROTEINFILE,'<',$proteinname or exit;
+@protein = <PROTEINFILE>;
+close PROTEINFILE or warn "$0:failed to close inputfile '$proteinname':$!\n";
+$protein= join('',@protein);
+$protein=~ s/\s//g;
+$count_of_shushui=0;
+for ( $position=0;$position<length $protein;$position++){
+$base= substr($protein,$position,1);
+if ($base=~ /[AVILFPWY]/) {
+++$count_of_shushui;}}
+$percent_of_shushui=$count_of_shushui/(length $protein);
+print "the percent of shushuiAA: ";
+print "$percent_of_shushui\n";
+exit;
