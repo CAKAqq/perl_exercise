@@ -1,0 +1,19 @@
+#!/usr/bin/perl -w
+$DNA='GGCTACGTA';
+$p='A';
+$q='C';
+$r='G';
+$s='T';
+for ( $position = (length $DNA)-1;$position>=0;$position--){
+$base = substr($DNA,$position,1);
+if ($base eq 'A'){
+print $s;}
+elsif ($base eq 'C'){
+print $r;}
+elsif ($base eq 'G'){
+print $q;}
+elsif ($base eq 'T'){
+print $p;}
+else {print " ";}}
+exit;
+
