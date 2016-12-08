@@ -1,0 +1,21 @@
+#!/usr/bin/perl -w
+use strict;
+print "please input the DNAsequence: ";
+my $dna=<STDIN>;
+chomp $dna;
+my @percent= reference($dna);
+print "the percent of A T C G : @percent\n ";
+exit;
+sub reference{
+my ($dna)=@_;
+my $a=($dna=~ tr/Aa//);
+my $t=($dna=~ tr/Tt//);
+my $c=($dna=~ tr/Cc//);
+my $g=($dna=~ tr/Gg//);
+my $percentA=$a/(length $dna);
+my $percentT=$t/(length $dna);
+my $percentC=$c/(length $dna);
+my $percentG=$g/(length $dna);
+my @percent=($percentA,$percentT,$percentC,$percentG);
+return @percent;
+}
