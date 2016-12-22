@@ -90,7 +90,7 @@ my ($filename) =@_;
 use strict;
 use warnings;
 my @filedata = ();
-unless(open（GET_FILE_DATA,$filename)){
+unless(open（get_file_data,$filename)){
 print STDERR "Cannot open file \"$filename\"\n\n";
 exit;
 }
