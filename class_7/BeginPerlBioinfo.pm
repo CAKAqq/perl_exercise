@@ -85,7 +85,7 @@ $protein .=codon2aa( substr($dna,$i,3));
 }
 return $protein;
 }
-5ub get_file_data {
+sub get_file_data {
 my ($filename) =@_;
 use strict;
 use warnings;
