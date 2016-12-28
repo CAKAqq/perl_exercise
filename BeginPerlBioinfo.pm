@@ -136,4 +136,4 @@ $end = length($seq);
 }
 return dna2peptide(substr ( $seq,$start - 1,$send -$start + 1));
 }
-1
+1；
