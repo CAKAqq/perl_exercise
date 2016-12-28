@@ -76,7 +76,7 @@ exit;
 }
 sub dna2peptide {
 my ($dna)=@_;
-usr strict;
+use strict;
 use warnings;
 use BeginPerlBioinfo;
 my $protein = '';
