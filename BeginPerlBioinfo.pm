@@ -85,7 +85,7 @@ $protein .=codon2aa( substr($dna,$i,3));
 }
 return $protein;
 }
-5ub get_file_data {
+sub get_file_data {
 my ($filename) =@_;
 use strict;
 use warnings;
@@ -135,5 +135,100 @@ unless ($send)
 $end = length($seq);
 }
 return dna2peptide(substr ( $seq,$start - 1,$send -$start + 1));
+}
+sub parseREBASE {
+
+    my($rebasefile) = @_;
+
+    use strict;
+    use warnings;
+    use BeginPerlBioinfo;     # see Chapter 6 about this module
+
+    # Declare variables
+    my @rebasefile = (  );
+    my %rebase_hash = (  );
+    my $name;
+    my $site;
+    my $regexp;
+
+    # Read in the REBASE file
+    my $rebase_filehandle = open_file($rebasefile);
+
+    while(<$rebase_filehandle>) {
+
+        # Discard header lines
+        ( 1 .. /Rich Roberts/ ) and next;
+
+        # Discard blank lines
+        /^\s*$/ and next;
+    
+        # Split the two (or three if includes parenthesized name) fields
+        my @fields = split( " ", $_);
+
+        # Get and store the name and the recognition site
+
+        # Remove parenthesized names, for simplicity's sake,
+        # by not saving the middle field, if any,
+        # just the first and last
+        $name = shift @fields;
+
+        $site = pop @fields;
+
+        # Translate the recognition sites to regular expressions
+        $regexp = IUB_to_regexp($site);
+
+        # Store the data into the hash
+        $rebase_hash{$name} = "$site $regexp";
+    }
+
+    # Return the hash containing the reformatted REBASE data
+    return %rebase_hash;
+}
+sub open_file {
+
+    my($filename) = @_;
+    my $fh;
+
+    unless(open($fh, $filename)) {
+        print "Cannot open file $filename\n";
+        exit;
+    }
+    return $fh;
+}
+sub IUB_to_regexp {
+
+    my($iub) = @_;
+
+    my $regular_expression = '';
+
+    my %iub2character_class = (
+    
+        A => 'A',
+        C => 'C',
+        G => 'G',
+        T => 'T',
+        R => '[GA]',
+        Y => '[CT]',
+        M => '[AC]',
+        K => '[GT]',
+        S => '[GC]',
+        W => '[AT]',
+        B => '[CGT]',
+        D => '[AGT]',
+        H => '[ACT]',
+        V => '[ACG]',
+        N => '[ACGT]',
+    );
+
+    # Remove the ^ signs from the recognition sites
+    $iub =~ s/\^//g;
+
+    # Translate each character in the iub sequence
+    for ( my $i = 0 ; $i < length($iub) ; ++$i ) {
+        $regular_expression
+          .= $iub2character_class{substr($iub, $i, 1)};
+    }
+
+    return $regular_expression;
 }
 1；
