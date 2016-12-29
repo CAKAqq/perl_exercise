@@ -9,7 +9,7 @@ my $dna ='';
 my $recognition_site = '';
 my $regexp = '';
 my @locations = ();
-@file_data = get_file_data(""sample.dna);
+@file_data = get_file_data("sample.dna");
 $dna = extract_sequence_from_fasta_data(@file_data);
 %rebase_hash = parseREBASE('bionet');
 do {
@@ -21,7 +21,7 @@ exit;
 }
 if (exists $rebase_hash{$query}) {
 ($recognition_site,$regexp) = split (" ",$rebase_hash{$query});
-@location = match_positions ($regexp,$dna );
+@locations= match_positions ($regexp,$dna );
 if (@locations){
 print "Searching for $query $recognition_site $regexp\n";
 print "A A restriction site for $query at locations:\n";
@@ -38,10 +38,10 @@ sub match_positions {
 my ($regexp,$sequence ) = @_;
 use strict;
 use BeginPerlBioinfo;
-my @position = ();
+my @positions= ();
 while ($sequence =~ /$regexp/ig ){
 push(@positions,pos($sequence) - length($&)+ 1 );
 }
-return @position;
+return @positions;
 }
 

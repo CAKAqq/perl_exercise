@@ -70,7 +70,7 @@ my (%genetic_code)= (
 if(exists $genetic_code{$codon}){
 return $genetic_code{$codon}
 }else{
-print STDEER "bad codon \"$codon\"!!\n";
+print STDERR "bad codon \"$codon\"!!\n";
 exit;
 }
 }
@@ -89,8 +89,8 @@ sub get_file_data {
 my ($filename) =@_;
 use strict;
 use warnings;
-my @filedata = ( );
-unless(open（GET_FILE_DATA,$filename)){
+my @filedata = ();
+unless(open(GET_FILE_DATA,$filename)){
 print STDERR "Cannot open file \"$filename\"\n\n";
 exit;
 }
@@ -130,8 +130,8 @@ return $revcom;
 }
 sub translate_frame {
 my ($seq,$start,$end) =@_;
-my ($protein)
-unless ($send)
+my $protein;
+unless ($end){
 $end = length($seq);
 }
 return dna2peptide(substr ( $seq,$start - 1,$send -$start + 1));
@@ -145,8 +145,8 @@ sub parseREBASE {
     use BeginPerlBioinfo;     # see Chapter 6 about this module
 
     # Declare variables
-    my @rebasefile = (  );
-    my %rebase_hash = (  );
+    my @rebasefile = ();
+    my %rebase_hash = ();
     my $name;
     my $site;
     my $regexp;
@@ -231,4 +231,4 @@ sub IUB_to_regexp {
 
     return $regular_expression;
 }
-1；
+1;
